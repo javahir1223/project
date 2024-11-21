@@ -28,6 +28,7 @@ function App() {
 				<Route path='/about' element={<About />} />
 				<Route path='/register' element={<Register />} />
 				<Route path='/login' element={<Login />} />
+				<Route path='/register' element={<Register/>}/>
 				<Route path='/contact' element={<Contact />} />
 				<Route path='/policy' element={<Policy />} />
 				<Route path='*' element={<PageNotFound />} />

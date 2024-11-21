@@ -1,0 +1,77 @@
+/* Стили для контейнера формы */
+.login-container {
+
+    max-width: 400px;
+    margin: auto;
+    margin-top: 170px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+  }
+  
+  /* Заголовок */
+  .login-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Сообщение об успешном или неудачном входе */
+  .message {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  .message.success {
+    color: green;
+  }
+  
+  .message.error {
+    color: red;
+  }
+  
+  /* Стиль для всех input */
+  .login-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .login-container .button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .login-container button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Стили для ссылки на регистрацию */
+  .login-container a {
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .login-container a:hover {
+    text-decoration: underline;
+  }
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
