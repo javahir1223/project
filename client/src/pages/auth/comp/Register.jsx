@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Register.css"; // Подключаем стили
+import "./Register.css"; 
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -37,7 +37,7 @@ const Register = () => {
       if (data.success) {
         setMessage("Registration successful!");
         setTimeout(() => {
-          navigate("/login"); // Переход на страницу логина
+          navigate("/login");
         }, 1500);
       } else {
         setMessage(data.message || "Registration failed.");
