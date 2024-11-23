@@ -13,6 +13,7 @@ import PrivateRoute from './components/routes/privateRoute'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import Login from './pages/auth/Login'
 import Dashboard from './pages/user/dashboard'
+import Footer from './components/layout/footer'
 
 function App() {
 	return (
@@ -32,6 +33,7 @@ function App() {
 				<Route path='/policy' element={<Policy />} />
 				<Route path='*' element={<PageNotFound />} />
 			</Routes>
+			<Footer/>
 		</>
 	)
 }
