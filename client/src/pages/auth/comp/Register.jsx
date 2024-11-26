@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Register.css"; 
+import "./Register.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -24,21 +24,30 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/api/v1/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "http://localhost:8080/api/v1/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await response.json();
 
       if (data.success) {
+        // Save user data to localStorage
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({ user: data.user, token: data.token })
+        );
+
         setMessage("Registration successful!");
         setTimeout(() => {
           navigate("/login");
-        }, 1500);
+        }, 500);
       } else {
         setMessage(data.message || "Registration failed.");
       }

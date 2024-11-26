@@ -19,13 +19,22 @@ const Login = () => {
 
       const data = await response.json();
       if (data.success) {
+        // Save user data and token to localStorage
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({ user: data.user, token: data.token })
+        );
+
         setMessage("Login successful!");
-        navigate("/");
+        setTimeout(() => {
+          navigate("/");
+        });
       } else {
-        setMessage(data.message);
+        setMessage(data.message || "Login failed.");
       }
     } catch (error) {
       setMessage("An error occurred. Please try again.");
+      console.error("Login error:", error);
     }
   };
 
@@ -69,7 +78,6 @@ const Login = () => {
           Go to Register
         </button>
       </div>
-      {/* <div className="bg-container"></div> */}
     </div>
   );
 };
