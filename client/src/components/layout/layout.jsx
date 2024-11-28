@@ -12,7 +12,6 @@ const Layout = ({children, title, keywords ="shop, online"}) => {
                 <title>{title}</title>
                 <link rel="canonical" href="http://mysite.com/example" />
             </Helmet>
-
 			<Header/>
 			<main>
 				{children}
