@@ -6,7 +6,7 @@ import { FaGithub, FaInstagram, FaTelegram, FaYoutube } from 'react-icons/fa'
 export const AdminMenu = () => {
     return (
             <div className="flex">
-                <aside className="w-64 h-[110vh] bg-gray-800 text-gray-300 p-5 flex flex-col shadow-lg">
+                <aside className="w-64 min-h-screen bg-gray-800 text-gray-300 p-5 flex flex-col shadow-lg">
                     <div className="mb-8">
                         <h2 className="text-2xl font-bold text-purple-400">Shop</h2>
                     </div>
@@ -29,11 +29,6 @@ export const AdminMenu = () => {
                         <li>
                             <Link to={'/dashboard/admin/create'} className="block py-2 px-4 hover:bg-gray-700 rounded transition">
                                 💻 Create Products
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to={'/dashboard/admin/users'} className="block py-2 px-4 hover:bg-gray-700 rounded transition">
-                                🙍‍♂️ Users
                             </Link>
                         </li>
                     </ul>
