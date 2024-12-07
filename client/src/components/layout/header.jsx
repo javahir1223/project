@@ -14,17 +14,51 @@ import {
   MenuItem,
   Button,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { IoIosClose } from "react-icons/io";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
+
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [cityList, setCityList] = useState([
+    "Toshkent",
+    "Andijon",
+    "Samarqand",
+    "Buxoro",
+    "Farg'ona",
+    "Namangan",
+    "Navoiy",
+    "Urganch",
+    "Qarshi",
+  ]);
+  const [search, setSearch] = useState("");
+  const [selectedCity, setSelectedCity] = useState(""); // State for the selected city
+
   const { auth, setAuth } = useAuth();
 
   const handleLogout = () => {
     setAuth({ user: null, token: "" });
     localStorage.removeItem("auth");
   };
+
+  // Save selected city to localStorage and update state
+  const handleCitySelect = (city, e) => {
+    e.preventDefault();
+    setSelectedCity(city);
+    localStorage.setItem("selectedCity", city); // Save to localStorage
+    setIsModalOpen(false);
+  };
+
+  // Load the selected city from localStorage on component mount
+  useEffect(() => {
+    const savedCity = localStorage.getItem("selectedCity");
+    if (savedCity) {
+      setSelectedCity(savedCity); // Update state with saved city
+    }
+  }, []); // Empty dependency array ensures this runs only on mount
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 32);
@@ -34,13 +68,17 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const filteredCities = cityList.filter((city) =>
+    city.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <>
       <div className="top-bar">
         <div className="top-bar-content">
-          <div className="location">
+          <div className="location" onClick={() => setIsModalOpen(true)}>
             <FiMapPin />
-            <span>Toshkent</span>
+            <span>{selectedCity || "Shaharni tanlang"}</span> {/* Show selected city */}
           </div>
           <nav className="top-nav">
             <a href="#">Topshirish punktlari</a>
@@ -87,39 +125,40 @@ const Header = () => {
           <div className="header-actions">
             {auth?.user ? (
               <>
-                {/* dropdown */}
                 <Menu className="w-28 flex">
                   <MenuHandler>
-                    <Button className="h-[100px] bg-white text-black border-0">
-                      Menu
+                    <Button className=" bg-white text-black border-0">
+                      <FiUser className="text-3xl font-normal" />
                     </Button>
                   </MenuHandler>
                   <MenuList>
-                    <MenuItem className="w-28  text-black">
-                      Menu Item 1
+                    <MenuItem className=" text-black">
+                      <Link
+                        to={`/dashboard/${auth.user.role === 1 ? "admin" : "user"}`}
+                      >
+                        Dashboard
+                      </Link>
                     </MenuItem>
-                    <MenuItem className=" text-black"><Link to={`/dashboard/${auth.user.role === 1 ? "admin" : "user"}`}>Dashboard</Link></MenuItem>
-                    <MenuItem
-                      className="text-black"
-                    >
-                      <Link onClick={handleLogout} to={'/login'}>Log out</Link>
+                    <MenuItem className="text-black">
+                      <Link onClick={handleLogout} to={"/login"}>
+                        Log out
+                      </Link>
                     </MenuItem>
                   </MenuList>
                 </Menu>
-                {/* /dropdown */}
               </>
             ) : (
               <>
                 <a href="#" className="header-action" aria-label="Login">
                   <FiUser />
-                  <span >Kirish</span>
+                  <span>Kirish</span>
                 </a>
               </>
             )}
 
-            <a href="#" className="header-action" aria-label="Favorites">
+            <a href="user_favourite" className="header-action" aria-label="Favorites">
               <FiHeart />
-              <span>Saralangan</span>
+              <span >Saralangan</span>
             </a>
             <a href="#" className="header-action" aria-label="Cart">
               <FiShoppingBag />
@@ -128,6 +167,45 @@ const Header = () => {
           </div>
         </div>
       </header>
+
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-header">
+              <h2>Shaharni tanlang</h2>
+              <button
+                className="close-btn"
+                onClick={() => setIsModalOpen(false)}
+              >
+                <IoIosClose />
+              </button>
+            </div>
+            <div className="modal-body">
+              <input
+                type="text"
+                placeholder="Shaharni qidirish"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="search-input"
+              />
+              <ul className="city-list">
+                {filteredCities.map((city, index) => (
+                  <li
+                    key={index}
+                    className="city-item"
+                    onClick={(e) => handleCitySelect(city, e)}
+                  >
+                    {city}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

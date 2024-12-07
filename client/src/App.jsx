@@ -14,21 +14,25 @@ import Dashboard from './pages/user/dashboard'
 import RegisterPage from './pages/auth/pages/RegisterPage'
 import LoginPage from './pages/auth/pages/LoginPage'
 import Header from './components/layout/header'
+import FavoritesAndCart from './pages/user/FavouritesAndCart'
+import Electronics from './pages/Electronics'
 
 function App() {
 	return (
 		<>
 			<Header/>
 			<Routes>
-				<Route path='/' element={<HomePage />} />
 				<Route path='/dashboard' element={<PrivateRoute />}>
 					<Route path='user' element={<Dashboard />} />
+					<Route path='user_favourite' element={<FavoritesAndCart />} />
+
 				</Route>
 				<Route path='/admin-dashboard' element={<AdminRoute />}>
 					<Route path='admin' element={<AdminDashboard />} />
 				</Route>
 				<Route path='/about' element={<About />} />
-				{/* <Route path='/register' element={<Register />} /> */}
+				<Route path='/' element={<HomePage />} />
+				<Route path='/electronics' element={<Electronics />} />
 				<Route path='/login' element={<LoginPage />} />
 				<Route path='/register' element={<RegisterPage/>}/>
 				<Route path='/contact' element={<Contact />} />
@@ -40,8 +44,3 @@ function App() {
 }
 
 export default App
-
-
-
-
-let a = 0

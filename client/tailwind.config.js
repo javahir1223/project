@@ -1,10 +1,9 @@
 module.exports = {
   content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',  // Добавьте путь до ваших файлов
+    "./src/**/*.{html,js,jsx,ts,tsx}", // Ishlatiladigan joylarni belgilash
   ],
   theme: {
     extend: {},
   },
   plugins: [],
-}
+};
