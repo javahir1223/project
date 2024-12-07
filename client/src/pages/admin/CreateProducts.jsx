@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Layout from "../../components/layout/layout";
 import { AdminMenu } from "../../components/layout/AdminMenu";
 import instance from "../../axios";
@@ -19,21 +18,20 @@ const Createproducts = () => {
   // Функция для получения категорий
   const fetchCategories = async () => {
     try {
-      const response = await instance.get(
-        "/category/get-category"
-      );
-      console.log("Fetched category data:", response.data); 
+      const response = await instance.get("/category/get-category");
       if (response.data && response.data.category) {
         setCategories(response.data.category);
+      } else {
+        console.error("Категории не найдены");
       }
     } catch (error) {
-      console.error("Ошибка:", error);
-      alert("Ошибка при подключении к серверу");
+      console.error("Ошибка при получении категорий:", error);
+      alert("Ошибка при получении категорий.");
     }
   };
 
   useEffect(() => {
-    fetchCategories(); 
+    fetchCategories();
   }, []);
 
   const handleChange = (e) => {
@@ -55,16 +53,10 @@ const Createproducts = () => {
     });
 
     try {
-      const response = await instance.post(
-        "/product/create-product",
-        data,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const response = await instance.post("/product/create-product", data);
 
       if (response.status === 200 || response.status === 201) {
-        alert("Product created!");
+        alert("Продукт создан!");
         setFormData({
           name: "",
           description: "",
@@ -74,10 +66,10 @@ const Createproducts = () => {
           photo: null,
         });
       } else {
-        alert(`Error: ${response.data.error || response.data.message}`);
+        alert(`Ошибка: ${response.data.error || response.data.message}`);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Ошибка при создании продукта:", error);
       alert("Ошибка при создании продукта.");
     } finally {
       setLoading(false);
@@ -89,16 +81,13 @@ const Createproducts = () => {
       <div className="flex">
         <AdminMenu />
         <div className="w-full">
-          <h2 className="text-lg font-bold mb-4">Create New Product</h2>
-          <form
-            onSubmit={handleSubmit}
-            className="p-6 bg-white rounded shadow-md"
-          >
+          <h2 className="text-lg font-bold mb-4">Создать новый продукт</h2>
+          <form onSubmit={handleSubmit} className="p-6 bg-white rounded shadow-md">
             {loading && (
-              <div className="text-blue-500 font-bold">Submitting...</div>
+              <div className="text-blue-500 font-bold">Отправка...</div>
             )}
             <div className="mb-4">
-              <label className="block font-semibold">Name</label>
+              <label className="block font-semibold">Название</label>
               <input
                 type="text"
                 name="name"
@@ -109,7 +98,7 @@ const Createproducts = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block font-semibold">Description</label>
+              <label className="block font-semibold">Описание</label>
               <textarea
                 name="description"
                 value={formData.description}
@@ -119,7 +108,7 @@ const Createproducts = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block font-semibold">Price</label>
+              <label className="block font-semibold">Цена</label>
               <input
                 type="number"
                 name="price"
@@ -130,7 +119,7 @@ const Createproducts = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block font-semibold">Category</label>
+              <label className="block font-semibold">Категория</label>
               <select
                 name="category"
                 value={formData.category}
@@ -138,7 +127,7 @@ const Createproducts = () => {
                 className="w-full border rounded p-2"
                 required
               >
-                <option value="">Select Category</option>
+                <option value="">Выберите категорию</option>
                 {categories.map((cat) => (
                   <option key={cat._id} value={cat._id}>
                     {cat.name}
@@ -147,7 +136,7 @@ const Createproducts = () => {
               </select>
             </div>
             <div className="mb-4">
-              <label className="block font-semibold">Quantity</label>
+              <label className="block font-semibold">Количество</label>
               <input
                 type="number"
                 name="quantity"
@@ -158,7 +147,7 @@ const Createproducts = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block font-semibold">Photo</label>
+              <label className="block font-semibold">Фото</label>
               <input
                 type="file"
                 name="photo"
@@ -170,7 +159,7 @@ const Createproducts = () => {
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded mt-4"
             >
-              Submit
+              Отправить
             </button>
           </form>
         </div>

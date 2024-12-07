@@ -12,15 +12,15 @@ instance.interceptors.request.use(
   (config) => {
     const auth = JSON.parse(localStorage.getItem("auth"));
     if (auth?.token) {
-      config.headers.Authorization = auth.token;
+      config.headers.Authorization = `Bearer ${auth.token}`; // "Bearer" qo'shilganiga ishonch hosil qiling.
     }
+
     // Fayl yuklash uchun Content-Type ni sozlash, agar FormData bo'lsa "multipart/form-data" qo'shadi.
-    if(config.data instanceof FormData){
+    if (config.data instanceof FormData) {
       config.headers["Content-Type"] = "multipart/form-data";
     }
     return config;
   },
-
 
   (error) => {
     return Promise.reject(error);
