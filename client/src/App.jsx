@@ -13,22 +13,27 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import Dashboard from './pages/user/dashboard'
 import RegisterPage from './pages/auth/pages/RegisterPage'
 import LoginPage from './pages/auth/pages/LoginPage'
-import Header from './components/layout/header'
 import FavoritesAndCart from './pages/user/FavouritesAndCart'
 import Electronics from './pages/Electronics'
+import Createproducts from './pages/admin/CreateProducts'
+import Allproducts from './pages/admin/AllProducts'
+import CreateCategory from './pages/admin/CreateCategory'
 
 function App() {
 	return (
 		<>
-			<Header/>
+			{/* <Header/> */}
 			<Routes>
 				<Route path='/dashboard' element={<PrivateRoute />}>
 					<Route path='user' element={<Dashboard />} />
 					<Route path='user_favourite' element={<FavoritesAndCart />} />
 
 				</Route>
-				<Route path='/admin-dashboard' element={<AdminRoute />}>
-					<Route path='admin' element={<AdminDashboard />} />
+				<Route path="/dashboard" element={<AdminRoute />}>
+					<Route path='admin' element={<AdminDashboard />} /> 
+					<Route path="admin/create" element={<Createproducts />} />
+					<Route path="admin/products" element={<Allproducts />} />
+					<Route path="admin/category" element={<CreateCategory />} />
 				</Route>
 				<Route path='/about' element={<About />} />
 				<Route path='/' element={<HomePage />} />

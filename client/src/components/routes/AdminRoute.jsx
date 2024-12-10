@@ -1,28 +1,31 @@
-import { useEffect, useState } from "react"
-import { useAuth } from "../../context/auth"
-import instance from "../../axios"
-import { Outlet } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { useAuth } from "../../context/auth";
+import instance from "../../axios";
+import { Outlet } from "react-router-dom";
 
 const AdminRoute = () => {
-    const [ok, setOk] = useState(false)
-    const {auth, setAuth} = useAuth()
+  const [ok, setOk] = useState(false);
+  const { auth } = useAuth();
 
-    useEffect(() => {
-        const authCheck = async () => {
-            const res = await instance.get(`auth/admin-auth`,{
-                headers: { Authorization: auth?.token },
-              })
-            if(res.data.ok){
-                setOk(true)
-            }else{
-                setOk(false)
-            }
+  useEffect(() => {
+    const authCheck = async () => {
+      try {
+        const res = await instance.get(`auth/admin-auth`);
+        if (res.data.ok) {
+          setOk(true);
+        } else {
+          setOk(false);
         }
-        // auth?.token bo'lgandagina tekshirsin
-        if(auth?.token) authCheck()
-    }, [auth?.token])
+      } catch (error) {
+        console.error("Xatolik yuz berdi:", error);
+        setOk(false);
+      }
+    };
 
-  return ok ? <Outlet/> : "spinner"
-}
+    if (auth?.token) authCheck();
+  }, [auth?.token]);
 
-export default AdminRoute
+  return ok ? <Outlet /> : <div>Spinner</div>;
+};
+
+export default AdminRoute;

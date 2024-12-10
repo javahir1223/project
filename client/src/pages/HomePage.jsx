@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 // import { MdKeyboardArrowRight } from "react-icons/md";
 import instance from '../axios';
+import Layout from '../components/layout/layout';
 
 const HomePage = () => {
 
@@ -41,6 +42,7 @@ const HomePage = () => {
   console.log('Rendering products:', data); // Log before rendering
 
   return (
+    <Layout>
     <div className="container">
       <h1 className="text-4xl text-center font-bold py-24 flex items-center justify-center">
         Mashhur<span className="ml-2">  {`>`}</span>
@@ -72,6 +74,7 @@ const HomePage = () => {
         ))}
       </div>
     </div>
+    </Layout>
   );
 };
 
